@@ -34,11 +34,11 @@ const SignUpPage = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 w-full" >
         <InputField 
        
-        name="fullname"
+        name="username"
         label="Full Name"
         placeholder="Enter your full name"
         register={register}
-        errors={errors.fullname}
+        errors={errors.username}
         validation={{ required: 'Full name is required',minLength:2  }}
         />
         <InputField 

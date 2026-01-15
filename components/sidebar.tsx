@@ -43,7 +43,7 @@ export function Sidebar() {
         })}
       </nav>
 
-      <Link href="/login">
+      <Link href="/sign-in">
         <Button
           variant="ghost"
           className="w-full justify-start gap-3 px-4 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"

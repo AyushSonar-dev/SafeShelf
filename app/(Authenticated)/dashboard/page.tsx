@@ -3,8 +3,9 @@
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Plus, FileText, Clock, XCircle } from "lucide-react"
+import { Plus, FileText, Clock, XCircle, Download, Upload, ChevronDown } from "lucide-react"
 import Link from "next/link"
+import { useState } from "react"
 
 const recentWarranties = [
   {
@@ -34,17 +35,42 @@ const recentWarranties = [
 ]
 
 export default function DashboardPage() {
+  const [expandedId, setExpandedId] = useState<number | null>(null)
+
+  const handleDownloadBill = (id: number) => {
+    const link = document.createElement("a")
+    link.href = `/api/download-bill/${id}`
+    link.download = `warranty-bill-${id}.pdf`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
+  const handleUploadBill = (id: number) => {
+    const input = document.createElement("input")
+    input.type = "file"
+    input.accept = ".pdf,.jpg,.jpeg,.png"
+    input.onchange = (e: any) => {
+      const file = e.target.files?.[0]
+      if (file) {
+        console.log(`Uploading bill for warranty ${id}:`, file.name)
+        // Handle file upload to backend
+      }
+    }
+    input.click()
+  }
+
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-foreground mb-2">Dashboard</h1>
-          <p className="text-muted-foreground">Welcome back! Here's an overview of your warranties.</p>
+          <p className="text-muted-foreground">Welcome back! Here's an overview of your subscriptions.</p>
         </div>
-        <Link href="/warranties/add">
+        <Link href="/subscriptions/add">
           <Button className="gap-2">
             <Plus className="h-4 w-4" />
-            Add Warranty
+            Add Subscription
           </Button>
         </Link>
       </div>
@@ -53,7 +79,7 @@ export default function DashboardPage() {
         <Card className="p-6">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-sm text-muted-foreground mb-2">Total Warranties</p>
+              <p className="text-sm text-muted-foreground mb-2">Total Subscriptions</p>
               <p className="text-3xl font-bold text-foreground">6</p>
             </div>
             <div className="p-3 bg-primary/10 rounded-lg">
@@ -88,16 +114,19 @@ export default function DashboardPage() {
       </div>
 
       <Card className="p-6">
-        <h2 className="text-xl font-bold text-foreground mb-6">Recent Warranties</h2>
+        <h2 className="text-xl font-bold text-foreground mb-6">Recent Subscriptions</h2>
         <div className="space-y-4">
           {recentWarranties.map((warranty) => (
-            <Link key={warranty.id} href={`/warranties/${warranty.id}`}>
-              <div className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-muted transition-colors cursor-pointer">
+            <div key={warranty.id} className="border border-border rounded-lg overflow-hidden">
+              <button
+                onClick={() => setExpandedId(expandedId === warranty.id ? null : warranty.id)}
+                className="w-full flex items-center justify-between p-4 hover:bg-muted transition-colors text-left"
+              >
                 <div className="flex-1">
                   <p className="font-semibold text-foreground">{warranty.product}</p>
                   <p className="text-sm text-muted-foreground">{warranty.brand}</p>
                 </div>
-                <div className="text-right">
+                <div className="text-right mr-4">
                   <p className="text-sm font-medium text-foreground">Warranty Expiry</p>
                   <p className="text-sm text-muted-foreground">{warranty.expiryDate}</p>
                   <p className="text-xs text-muted-foreground mt-1">
@@ -106,7 +135,7 @@ export default function DashboardPage() {
                       : `${warranty.daysLeft} days remaining`}
                   </p>
                 </div>
-                <div className="ml-4">
+                <div className="mr-4">
                   <Badge
                     variant={
                       warranty.status === "Active"
@@ -119,8 +148,33 @@ export default function DashboardPage() {
                     {warranty.status}
                   </Badge>
                 </div>
-              </div>
-            </Link>
+                <ChevronDown
+                  className={`h-5 w-5 text-muted-foreground transition-transform ${
+                    expandedId === warranty.id ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {expandedId === warranty.id && (
+                <div className="border-t border-border bg-muted/30 p-4 space-y-4">
+                  <div>
+                    <h3 className="text-sm font-semibold text-foreground mb-3">Bill Management</h3>
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="gap-2 bg-transparent"
+                        onClick={() => handleDownloadBill(warranty.id)}
+                      >
+                        <Download className="h-4 w-4" />
+                        Download Bill
+                      </Button>
+                      
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
         </div>
       </Card>

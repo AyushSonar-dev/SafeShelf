@@ -65,12 +65,12 @@ export default function DashboardPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-foreground mb-2">Dashboard</h1>
-          <p className="text-muted-foreground">Welcome back! Here's an overview of your subscriptions.</p>
+          <p className="text-muted-foreground">Welcome back! Here's an overview of your warranties.</p>
         </div>
-        <Link href="/subscriptions/add">
+        <Link href="/warrenties/add">
           <Button className="gap-2">
             <Plus className="h-4 w-4" />
-            Add Subscription
+            Add Warranty
           </Button>
         </Link>
       </div>
@@ -79,7 +79,7 @@ export default function DashboardPage() {
         <Card className="p-6">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-sm text-muted-foreground mb-2">Total Subscriptions</p>
+              <p className="text-sm text-muted-foreground mb-2">Total Warranties</p>
               <p className="text-3xl font-bold text-foreground">6</p>
             </div>
             <div className="p-3 bg-primary/10 rounded-lg">
@@ -114,7 +114,7 @@ export default function DashboardPage() {
       </div>
 
       <Card className="p-6">
-        <h2 className="text-xl font-bold text-foreground mb-6">Recent Subscriptions</h2>
+        <h2 className="text-xl font-bold text-foreground mb-6">Recent Warranties</h2>
         <div className="space-y-4">
           {recentWarranties.map((warranty) => (
             <div key={warranty.id} className="border border-border rounded-lg overflow-hidden">

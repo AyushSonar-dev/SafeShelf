@@ -24,6 +24,11 @@ declare global {
     Linktext: string;
     href: string;
   };
+  type WelcomeEmailData={
+      email:string,
+      name:string,
+      intro:string
+  }
 }
 
 export {};

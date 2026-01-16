@@ -2,9 +2,15 @@
 import { Button } from "@/components/ui/button";
 import FooterLink from "@/components/ui/forms/FooterLink";
 import InputField from "@/components/ui/forms/inputField";
+import { signUpWithEmail } from "@/lib/actions/auth.actions";
+import { router } from "better-auth/api";
+import { Sign } from "crypto";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 
 const SignUpPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -20,9 +26,14 @@ const SignUpPage = () => {
   });
   const onSubmit = async (data: SignUpFromData) => {
     try {
-      console.log(data);
-    } catch (error) {
+      const result = await signUpWithEmail(data);
+      if(result.success){
+        router.push("/dashboard");
+    }} catch (error) {
       console.log(error);
+      toast.error("Sign up failed.",{
+        description:error instanceof Error ? error.message : "Please try again later."  
+      });
     }
   };
   return (

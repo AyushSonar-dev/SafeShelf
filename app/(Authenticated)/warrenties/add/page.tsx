@@ -44,12 +44,12 @@ export default function AddWarrantyPage() {
     e.preventDefault()
     // Handle form submission with image
     console.log("Form submitted with image:", uploadedImage)
-    window.location.href = "/subscriptions"
+    window.location.href = "/warrenties"
   }
 
   return (
     <div className="space-y-8">
-      <Link href="/subscriptions">
+      <Link href="/warrenties">
         <Button variant="outline" className="gap-2 bg-transparent">
           <ArrowLeft className="h-4 w-4" />
           Back to subscriptions
@@ -228,9 +228,9 @@ export default function AddWarrantyPage() {
 
             <div className="flex gap-3 pt-4">
               <Button type="submit" className="flex-1">
-                Save Subscription
+                Save Warranty
               </Button>
-              <Link href="/subscriptions" className="flex-1">
+              <Link href="/warrenties" className="flex-1">
                 <Button type="button" variant="outline" className="w-full bg-transparent">
                   Cancel
                 </Button>

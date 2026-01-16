@@ -2,16 +2,17 @@
 
 import { useState } from "react"
 import { User } from "lucide-react"
-
-export function Navbar() {
+type User={
+  user:{
+    id:string;
+    name:string|null; 
+    email:string|null;
+  }
+}
+export function Navbar({user}:User) {
   const [isHovered, setIsHovered] = useState(false)
 
-  // Mock user data - replace with actual user data from auth/session
-  const user = {
-    name: "John Anderson",
-    email: "user@example.com",
-  }
-
+ 
   return (
     <nav className="flex justify-end items-center p-6 bg-background border-b border-border">
       <div className="relative" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>

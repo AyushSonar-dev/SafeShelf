@@ -2,9 +2,13 @@
 import { Button } from "@/components/ui/button";
 import FooterLink from "@/components/ui/forms/FooterLink";
 import InputField from "@/components/ui/forms/inputField";
+import { signInWithEmail } from "@/lib/actions/auth.actions";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const SignInPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -18,11 +22,16 @@ const SignInPage = () => {
   });
 
   const onSubmit = async (data: { email: string; password: string; }) => {
-    try {
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+     try {
+       const result = await signInWithEmail(data);
+       if(result.success){
+         router.push("/dashboard");
+     }} catch (error) {
+       console.log(error);
+       toast.error("Sign In failed.",{
+         description:error instanceof Error ? error.message : "Please try again later."  
+       });
+     }
   };
   return (
     <main className="flex flex-col w-7.5rem justify-center items-center">

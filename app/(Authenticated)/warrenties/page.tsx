@@ -119,11 +119,11 @@ export default function WarrantiesPage() {
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-foreground">All Subscriptions</h1>
-        <Link href="/subscriptions/add">
+        <h1 className="text-3xl font-bold text-foreground">All Warranties</h1>
+        <Link href="/warrenties/add">
           <Button className="gap-2">
             <Plus className="h-4 w-4" />
-            Add Subscription
+            Add Warranty
           </Button>
         </Link>
       </div>

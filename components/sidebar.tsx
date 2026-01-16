@@ -5,13 +5,14 @@ import Link from "next/link"
 import { LayoutDashboard, FileText, Settings, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { SignOut } from "@/lib/actions/auth.actions"
 
 export function Sidebar() {
   const pathname = usePathname()
 
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
-    { icon: FileText, label: "My Subscriptions", href: "/subscriptions" },
+    { icon: FileText, label: "My Warranties", href: "/warrenties" },
     { icon: Settings, label: "Settings", href: "/settings" },
   ]
 
@@ -45,6 +46,9 @@ export function Sidebar() {
 
       <Link href="/sign-in">
         <Button
+        onClick={ async ()=>{
+          await SignOut();
+        }}
           variant="ghost"
           className="w-full justify-start gap-3 px-4 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
         >

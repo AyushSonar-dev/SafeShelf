@@ -26,7 +26,15 @@ export const signUpWithEmail=async({email, password, username}:SignUpFromData)=>
         return {success:true,data:response}
     } catch (error) {
         console.log(error);
-        return {success:false,message:"Sign up failed"}
+        let message = "Sign up failed";
+        if (error instanceof Error) {
+            if (error.message.includes("email already exists") || error.message.includes("already in use")) {
+                message = "**This email already exists in the database. Please use a different email.**";
+            } else {
+                message = error.message;
+            }
+        }
+        return {success:false,message}
         
     }
 }
@@ -43,7 +51,15 @@ export const signInWithEmail=async({email, password}:SignInFromData)=>{
         return {success:true,data:response}
     } catch (error) {
         console.log(error);
-        return {success:false,message:"Sign In failed"}
+        let message = "Sign In failed";
+        if (error instanceof Error) {
+            if (error.message.includes("invalid") || error.message.includes("not found") || error.message.includes("incorrect")) {
+                message = "**Email or password is incorrect. Please try again.**";
+            } else {
+                message = error.message;
+            }
+        }
+        return {success:false,message}
         
     }
 }

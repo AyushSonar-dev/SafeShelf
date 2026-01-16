@@ -15,6 +15,7 @@ const SignUpPage = () => {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<SignUpFromData>({
     defaultValues: {
@@ -24,12 +25,20 @@ const SignUpPage = () => {
     },
     mode: "onBlur",
   });
+
+  const password = watch("password");
   const onSubmit = async (data: SignUpFromData) => {
     try {
       const result = await signUpWithEmail(data);
       if(result.success){
         router.push("/dashboard");
-    }} catch (error) {
+      } else {
+        toast.error(`${result.message || "Please try again later."}`,{
+          
+          style: { fontWeight: "bold", fontSize: "1rem" }
+        });
+      }
+    } catch (error) {
       console.log(error);
       toast.error("Sign up failed.",{
         description:error instanceof Error ? error.message : "Please try again later."  
@@ -70,6 +79,19 @@ const SignUpPage = () => {
         register={register}
         errors={errors.password}
         validation={{ required: 'Password is required',minLength:8  }}
+        />
+        <InputField 
+       
+        name="confirmPassword"
+        label="Confirm Password"
+        placeholder="Confirm your password"
+        type="password"
+        register={register}
+        errors={errors.confirmPassword}
+        validation={{ 
+          required: 'Please confirm your password',
+          validate: (value:String) => value === password || 'Passwords do not match'
+        }}
         />
         <Button type="submit" disabled={isSubmitting} className="w-full">
           {isSubmitting ? "Creating Account..." : "Sign Up"}

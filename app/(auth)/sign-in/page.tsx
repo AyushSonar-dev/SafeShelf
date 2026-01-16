@@ -26,7 +26,13 @@ const SignInPage = () => {
        const result = await signInWithEmail(data);
        if(result.success){
          router.push("/dashboard");
-     }} catch (error) {
+       } else {
+         toast.error(`${result.message || "Please try again later."}`,{
+          
+           style: { fontWeight: "bold", fontSize: "1rem" }
+         });
+       }
+     } catch (error) {
        console.log(error);
        toast.error("Sign In failed.",{
          description:error instanceof Error ? error.message : "Please try again later."  

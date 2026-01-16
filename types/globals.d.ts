@@ -3,6 +3,7 @@ declare global {
     username: string;
     email: string;
     password: string;
+    confirmPassword: string;
   }
   interface SignInFromData {
     email: string;
@@ -24,11 +25,18 @@ declare global {
     Linktext: string;
     href: string;
   };
-  type WelcomeEmailData={
-      email:string,
-      name:string,
-      intro:string
-  }
+  type WelcomeEmailData = {
+    email: string;
+    name: string;
+    intro: string;
+  };
+  type WarrantyExpiryEmailData = {
+    email: string;
+    name: string;
+    productName: string;
+    expiryDate: string;
+    expiryContent: string;
+  };
 }
 
 export {};

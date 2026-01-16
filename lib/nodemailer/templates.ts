@@ -122,3 +122,140 @@ SafeShelf · Warranty Management Made Simple<br>
 </table>
 </body>
 </html>`;
+
+export const WARRANTY_EXPIRY_EMAIL_TEMPLATE = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="x-apple-disable-message-reformatting">
+    <title>Warranty Expiry Reminder - SafeShelf</title>
+
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:AllowPNG/>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+
+    <style type="text/css">
+        @media (prefers-color-scheme: dark) {
+            .email-container {
+                background-color: #0a0a0a !important;
+                border: 1px solid #2a2a2a !important;
+            }
+            .dark-bg {
+                background-color: #000000 !important;
+            }
+            .dark-text {
+                color: #ffffff !important;
+            }
+            .dark-text-secondary {
+                color: #cfcfcf !important;
+            }
+            .dark-text-muted {
+                color: #9a9a9a !important;
+            }
+            .dark-border {
+                border-color: #2a2a2a !important;
+            }
+            .alert-bg {
+                background-color: #1a0a0a !important;
+                border-color: #4a2a2a !important;
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+                margin: 0 !important;
+            }
+            .mobile-padding {
+                padding: 24px !important;
+            }
+            .mobile-title {
+                font-size: 22px !important;
+            }
+            .mobile-text {
+                font-size: 14px !important;
+            }
+        }
+    </style>
+</head>
+
+<body style="margin: 0; padding: 0; background-color: #000000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #000000;">
+<tr>
+<td align="center" style="padding: 40px 20px;">
+
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" class="email-container" style="max-width: 600px; background-color: #0a0a0a; border-radius: 10px; border: 1px solid #2a2a2a;">
+
+<tr>
+<td class="mobile-padding" style="padding: 40px;">
+
+<!-- Alert Banner -->
+<div class="alert-bg" style="background-color: #1a0a0a; border: 1px solid #4a2a2a; border-radius: 8px; padding: 20px; margin-bottom: 28px;">
+<p class="mobile-text dark-text" style="margin: 0; font-size: 16px; font-weight: 600; color: #ff6b6b;">
+⚠️ Warranty Expiring Soon
+</p>
+</div>
+
+<!-- Heading -->
+<h1 class="mobile-title dark-text" style="margin: 0 0 28px 0; font-size: 24px; font-weight: 600; color: #ffffff; line-height: 1.2;">
+Your warranty is expiring, {{name}}
+</h1>
+
+<!-- Expiry Content (AI injected) -->
+{{expiryContent}}
+
+<!-- Action Items -->
+<p class="mobile-text dark-text-secondary" style="margin: 0 0 14px 0; font-size: 16px; font-weight: 600; color: #cfcfcf;">
+What you can do now:
+</p>
+
+<!-- Action List -->
+<ul class="mobile-text dark-text-secondary" style="margin: 0 0 30px 0; padding-left: 18px; font-size: 16px; line-height: 1.6; color: #cfcfcf;">
+<li style="margin-bottom: 10px;">Review your warranty details in SafeShelf</li>
+<li style="margin-bottom: 10px;">Decide whether to renew your coverage</li>
+<li style="margin-bottom: 10px;">File a claim if you need to use your warranty</li>
+<li style="margin-bottom: 10px;">Contact the provider before coverage ends</li>
+</ul>
+
+<!-- Supporting Text -->
+<p class="mobile-text dark-text-secondary" style="margin: 0 0 36px 0; font-size: 16px; line-height: 1.6; color: #cfcfcf;">
+Don't miss this deadline! Once your warranty expires, you may lose the opportunity to file claims or renew coverage.
+</p>
+
+<!-- CTA -->
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 36px;">
+<tr>
+<td align="center">
+<a href="{{appUrl}}/warranties" style="display: block; width: 100%; background-color: #ff6b6b; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 8px; font-size: 16px; font-weight: 500; text-align: center;">
+View Warranty Details
+</a>
+</td>
+</tr>
+</table>
+
+<!-- Footer -->
+<p class="mobile-text dark-text-muted" style="margin: 40px 0 0 0; font-size: 14px; line-height: 1.5; color: #9a9a9a; text-align: center;">
+SafeShelf · Warranty Management Made Simple<br>
+<a href="#" style="color: #9a9a9a; text-decoration: underline;">Unsubscribe</a> |
+<a href="{{appUrl}}" style="color: #9a9a9a; text-decoration: underline;">Visit SafeShelf</a><br>
+© 2025 SafeShelf
+</p>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+</body>
+</html>`;

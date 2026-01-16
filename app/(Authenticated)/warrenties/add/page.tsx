@@ -11,8 +11,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { ArrowLeft, ImageIcon } from "lucide-react"
 import Link from "next/link"
+import { saveWarranty } from "@/lib/actions/warranty.actions"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 export default function AddWarrantyPage() {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     productName: "",
     brand: "",
@@ -27,6 +31,7 @@ export default function AddWarrantyPage() {
 
   const [uploadedImage, setUploadedImage] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -40,11 +45,49 @@ export default function AddWarrantyPage() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission with image
-    console.log("Form submitted with image:", uploadedImage)
-    window.location.href = "/warrenties"
+    
+    // Validate required fields
+    if (!formData.productName || !formData.brand || !formData.category || !formData.purchaseDate || !formData.warrantyDuration) {
+      toast.error("Please fill in all required fields")
+      return
+    }
+
+    setIsLoading(true)
+    try {
+      const formDataToSend = new FormData()
+      
+      // Add warranty data
+      formDataToSend.append("productName", formData.productName)
+      formDataToSend.append("brand", formData.brand)
+      formDataToSend.append("category", formData.category)
+      formDataToSend.append("purchaseDate", formData.purchaseDate)
+      formDataToSend.append("warrantyDuration", formData.warrantyDuration)
+      formDataToSend.append("durationUnit", formData.durationUnit)
+      formDataToSend.append("storeName", formData.storeName)
+      formDataToSend.append("price", formData.price)
+      formDataToSend.append("notes", formData.notes)
+      
+      // Add image if uploaded
+      if (uploadedImage) {
+        formDataToSend.append("image", uploadedImage)
+      }
+
+      const result = await saveWarranty(formDataToSend)
+      
+      if (result.success) {
+        toast.success("Warranty saved successfully!")
+        router.push("/warrenties")
+      } else {
+        toast.error(result.message || "Failed to save warranty")
+      }
+    } catch (error) {
+      console.error("Error saving warranty:", error)
+      toast.error("An error occurred while saving the warranty")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -227,8 +270,8 @@ export default function AddWarrantyPage() {
             </div>
 
             <div className="flex gap-3 pt-4">
-              <Button type="submit" className="flex-1">
-                Save Warranty
+              <Button type="submit" className="flex-1" disabled={isLoading}>
+                {isLoading ? "Saving..." : "Save Warranty"}
               </Button>
               <Link href="/warrenties" className="flex-1">
                 <Button type="button" variant="outline" className="w-full bg-transparent">

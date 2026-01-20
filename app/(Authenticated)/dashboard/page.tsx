@@ -209,12 +209,15 @@ export default function DashboardPage() {
                     <div>
                       <h3 className="text-sm font-semibold text-foreground mb-3">Bill Management</h3>
                       <div className="flex gap-2">
-                        <Link href={`/warrenties/${warranty.id}`} className="flex-1">
-                          <Button size="sm" variant="outline" className="gap-2 bg-transparent w-full">
-                            <FileText className="h-4 w-4" />
-                            View Details
-                          </Button>
-                        </Link>
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          className="gap-2 bg-transparent flex-1"
+                          onClick={() => handleDownloadBill(warranty.id)}
+                        >
+                          <Download className="h-4 w-4" />
+                          Download Bill
+                        </Button>
                       </div>
                     </div>
                   </div>
